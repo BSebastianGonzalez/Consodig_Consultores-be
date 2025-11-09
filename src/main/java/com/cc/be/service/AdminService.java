@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -41,4 +43,32 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
+    }
+
+    public Admin getAdminById(Long id) {
+        return adminRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Administrador no encontrado"));
+    }
+
+    public Admin updateAdmin(Long id, AdminRequestDTO dto) {
+        Admin admin = getAdminById(id);
+
+        admin.setNombre(dto.getNombre());
+        admin.setApellido(dto.getApellido());
+        admin.setCedula(dto.getCedula());
+        admin.setTelefono(dto.getTelefono());
+        admin.setDireccion(dto.getDireccion());
+
+        return adminRepository.save(admin);
+    }
+
+    public void deactivateAdmin(Long id) {
+        Admin admin = getAdminById(id);
+        Account account = admin.getAccount();
+
+        account.setEnabled(false);
+        accountRepository.save(account);
+    }
 }
