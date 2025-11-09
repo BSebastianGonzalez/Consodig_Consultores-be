@@ -23,5 +23,6 @@ public class Admin {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     @JsonBackReference
+    @MapsId
     private Account account;
 }
