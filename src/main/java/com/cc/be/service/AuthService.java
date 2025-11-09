@@ -2,13 +2,11 @@ package com.cc.be.service;
 
 import com.cc.be.dto.LoginRequestDTO;
 import com.cc.be.dto.LoginResponseDTO;
-import com.cc.be.model.Account;
-import com.cc.be.model.Admin;
-import com.cc.be.model.Evaluador;
-import com.cc.be.model.Rol;
+import com.cc.be.model.*;
 import com.cc.be.repository.AccountRepository;
 import com.cc.be.repository.AdminRepository;
 import com.cc.be.repository.EvaluadorRepository;
+import com.cc.be.repository.EvaluandoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,7 @@ public class AuthService {
     private final AccountRepository accountRepository;
     private final AdminRepository adminRepository;
     private final EvaluadorRepository evaluadorRepository;
-
+    private final EvaluandoRepository evaluandoRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     public LoginResponseDTO login(LoginRequestDTO dto) {
@@ -47,12 +45,12 @@ public class AuthService {
                 return new LoginResponseDTO(eval.getId(), account.getEmail(), Rol.EVALUADOR,
                         eval.getNombre(), eval.getApellido());
             }
-            /*case EVALUANDO -> {
+            case EVALUANDO -> {
                 Evaluando evald = evaluandoRepository.findById(account.getId())
                         .orElseThrow(() -> new RuntimeException("No se encontró el evaluando"));
                 return new LoginResponseDTO(evald.getId(), account.getEmail(), Rol.EVALUANDO,
-                        evald.getNombre(), evald.getApellido());
-            }*/
+                        evald.getNombre(), null);
+            }
             default -> throw new RuntimeException("Rol desconocido");
         }
     }
