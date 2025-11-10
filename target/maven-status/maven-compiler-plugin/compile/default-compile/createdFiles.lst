@@ -4,6 +4,7 @@ com\cc\be\dto\EvaluandoRequestDTO.class
 com\cc\be\model\Evaluador.class
 com\cc\be\repository\AccountRepository.class
 com\cc\be\controller\EvaluadorController.class
+com\cc\be\config\WebConfig.class
 com\cc\be\model\PasswordResetToken.class
 com\cc\be\service\AuthService$1.class
 com\cc\be\model\Rol.class
