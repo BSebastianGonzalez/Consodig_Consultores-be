@@ -21,4 +21,5 @@ public class Evaluando {
     @JsonBackReference
     @MapsId
     private Account account;
+    private NivelEstudios nivelEstudios;
 }
