@@ -4,13 +4,14 @@ import com.cc.be.dto.LineaInvestigacionDTO;
 import com.cc.be.model.LineaInvestigacion;
 import com.cc.be.service.LineaInvestigacionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Service
+
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/lineas-investigacion")
 public class LineaInvestigacionController {
     private final LineaInvestigacionService lineaInvestigacionService;
 
