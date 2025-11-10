@@ -59,7 +59,7 @@ public class EvaluandoService {
                 throw new RuntimeException("Una o más líneas de investigación no existen");
             }
 
-            evaluando.setLineasInvestigacion(lineas);
+            evaluando.setLineasInvestigacionEvaluando(lineas);
         }
 
         return evaluandoRepository.save(evaluando);
@@ -101,7 +101,7 @@ public class EvaluandoService {
                 throw new RuntimeException("Una o más líneas de investigación no existen");
             }
 
-            evaluando.setLineasInvestigacion(lineas);
+            evaluando.setLineasInvestigacionEvaluando(lineas);
         }
 
         return evaluandoRepository.save(evaluando);

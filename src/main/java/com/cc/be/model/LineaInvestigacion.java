@@ -21,11 +21,11 @@ public class LineaInvestigacion {
     private String nombre;
     private String descripcion;
 
-    @ManyToMany(mappedBy = "lineasInvestigacion")
+    @ManyToMany(mappedBy = "lineasInvestigacionEvaluador")
     @JsonBackReference
     private List<Evaluador> evaluadores = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "lineasInvestigacion")
+    @ManyToMany(mappedBy = "lineasInvestigacionEvaluando")
     @JsonBackReference
     private List<Evaluando> evaluandos = new ArrayList<>();
 }
