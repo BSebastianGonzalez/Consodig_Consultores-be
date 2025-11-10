@@ -1,12 +1,10 @@
 package com.cc.be.service;
 
 import com.cc.be.dto.EvaluadorRequestDTO;
-import com.cc.be.model.Account;
-import com.cc.be.model.Evaluador;
-import com.cc.be.model.NivelEstudios;
-import com.cc.be.model.Rol;
+import com.cc.be.model.*;
 import com.cc.be.repository.AccountRepository;
 import com.cc.be.repository.EvaluadorRepository;
+import com.cc.be.repository.LineaInvestigacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,35 +19,47 @@ public class EvaluadorService {
     private final EvaluadorRepository evaluadorRepository;
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final LineaInvestigacionRepository lineaInvestigacionRepository;
 
-    public Evaluador createEvaluador(EvaluadorRequestDTO evaluadorRequestDTO) {
-        if (accountRepository.findByEmail(evaluadorRequestDTO.getEmail()).isPresent()) {
+    public Evaluador createEvaluador(EvaluadorRequestDTO dto) {
+        if (accountRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya está en uso");
         }
 
         Account account = new Account();
-        account.setEmail(evaluadorRequestDTO.getEmail());
-        account.setPassword(bCryptPasswordEncoder.encode(evaluadorRequestDTO.getPassword()));
+        account.setEmail(dto.getEmail());
+        account.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         account.setRol(Rol.EVALUADOR);
         account.setEnabled(true);
 
         Account savedAccount = accountRepository.save(account);
 
         Evaluador evaluador = new Evaluador();
-        evaluador.setNombre(evaluadorRequestDTO.getNombre());
-        evaluador.setApellido(evaluadorRequestDTO.getApellido());
-        evaluador.setAfiliacionInstitucional(evaluadorRequestDTO.getAfiliacionInstitucional());
-        evaluador.setCvlac(evaluadorRequestDTO.getCvlac());
-        evaluador.setGoogleScholar(evaluadorRequestDTO.getGoogleScholar());
-        evaluador.setOrcid(evaluadorRequestDTO.getOrcid());
+        evaluador.setNombre(dto.getNombre());
+        evaluador.setApellido(dto.getApellido());
+        evaluador.setAfiliacionInstitucional(dto.getAfiliacionInstitucional());
+        evaluador.setCvlac(dto.getCvlac());
+        evaluador.setGoogleScholar(dto.getGoogleScholar());
+        evaluador.setOrcid(dto.getOrcid());
         evaluador.setAccount(savedAccount);
 
         try {
             evaluador.setNivelEducativo(
-                    NivelEstudios.valueOf(evaluadorRequestDTO.getNivelEducativo().toUpperCase())
+                    NivelEstudios.valueOf(dto.getNivelEducativo().toUpperCase())
             );
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Nivel educativo inválido. Valores permitidos: " + Arrays.toString(NivelEstudios.values()));
+            throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
+                    + Arrays.toString(NivelEstudios.values()));
+        }
+
+        if (dto.getLineasInvestigacionIds() != null && !dto.getLineasInvestigacionIds().isEmpty()) {
+            List<LineaInvestigacion> lineas = lineaInvestigacionRepository.findAllById(dto.getLineasInvestigacionIds());
+
+            if (lineas.size() != dto.getLineasInvestigacionIds().size()) {
+                throw new RuntimeException("Una o más líneas de investigación no existen");
+            }
+
+            evaluador.setLineasInvestigacion(lineas);
         }
 
         return evaluadorRepository.save(evaluador);
@@ -65,7 +75,8 @@ public class EvaluadorService {
     }
 
     public Evaluador updateEvaluador(Long id, EvaluadorRequestDTO dto) {
-        Evaluador evaluador = getEvaluadorById(id);
+        Evaluador evaluador = evaluadorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evaluador no encontrado"));
 
         evaluador.setNombre(dto.getNombre());
         evaluador.setApellido(dto.getApellido());
@@ -83,6 +94,16 @@ public class EvaluadorService {
                 throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
                         + Arrays.toString(NivelEstudios.values()));
             }
+        }
+
+        if (dto.getLineasInvestigacionIds() != null) {
+            List<LineaInvestigacion> lineas = lineaInvestigacionRepository.findAllById(dto.getLineasInvestigacionIds());
+
+            if (lineas.size() != dto.getLineasInvestigacionIds().size()) {
+                throw new RuntimeException("Una o más líneas de investigación no existen");
+            }
+
+            evaluador.setLineasInvestigacion(lineas);
         }
 
         return evaluadorRepository.save(evaluador);

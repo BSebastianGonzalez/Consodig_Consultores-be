@@ -1,12 +1,10 @@
 package com.cc.be.service;
 
 import com.cc.be.dto.EvaluandoRequestDTO;
-import com.cc.be.model.Account;
-import com.cc.be.model.Evaluando;
-import com.cc.be.model.NivelEstudios;
-import com.cc.be.model.Rol;
+import com.cc.be.model.*;
 import com.cc.be.repository.AccountRepository;
 import com.cc.be.repository.EvaluandoRepository;
+import com.cc.be.repository.LineaInvestigacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,7 @@ public class EvaluandoService {
 
     private final AccountRepository accountRepository;
     private final EvaluandoRepository evaluandoRepository;
+    private final LineaInvestigacionRepository lineaInvestigacionRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Evaluando createEvaluando(EvaluandoRequestDTO evaluandoRequestDTO) {
@@ -40,7 +39,6 @@ public class EvaluandoService {
         evaluando.setTelefono(evaluandoRequestDTO.getTelefono());
         evaluando.setAccount(savedAccount);
 
-        // conversión segura del nivel educativo
         try {
             evaluando.setNivelEstudios(
                     NivelEstudios.valueOf(evaluandoRequestDTO.getNivelEducativo().toUpperCase())
@@ -48,6 +46,20 @@ public class EvaluandoService {
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
                     + Arrays.toString(NivelEstudios.values()));
+        }
+
+        if (evaluandoRequestDTO.getLineasInvestigacionIds() != null &&
+                !evaluandoRequestDTO.getLineasInvestigacionIds().isEmpty()) {
+
+            List<LineaInvestigacion> lineas = lineaInvestigacionRepository.findAllById(
+                    evaluandoRequestDTO.getLineasInvestigacionIds()
+            );
+
+            if (lineas.size() != evaluandoRequestDTO.getLineasInvestigacionIds().size()) {
+                throw new RuntimeException("Una o más líneas de investigación no existen");
+            }
+
+            evaluando.setLineasInvestigacion(lineas);
         }
 
         return evaluandoRepository.save(evaluando);
@@ -78,6 +90,18 @@ public class EvaluandoService {
                 throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
                         + Arrays.toString(NivelEstudios.values()));
             }
+        }
+
+        if (evaluandoRequestDTO.getLineasInvestigacionIds() != null) {
+            List<LineaInvestigacion> lineas = lineaInvestigacionRepository.findAllById(
+                    evaluandoRequestDTO.getLineasInvestigacionIds()
+            );
+
+            if (lineas.size() != evaluandoRequestDTO.getLineasInvestigacionIds().size()) {
+                throw new RuntimeException("Una o más líneas de investigación no existen");
+            }
+
+            evaluando.setLineasInvestigacion(lineas);
         }
 
         return evaluandoRepository.save(evaluando);
