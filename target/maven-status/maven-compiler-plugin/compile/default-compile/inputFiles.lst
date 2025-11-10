@@ -8,6 +8,7 @@ C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyec
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\AdminRequestDTO.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\EvaluadorRequestDTO.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\EvaluandoRequestDTO.java
+C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\LineaInvestigacionDTO.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\LoginRequestDTO.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\LoginResponseDTO.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\dto\ResetPasswordRequest.java
@@ -15,6 +16,7 @@ C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyec
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\Admin.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\Evaluador.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\Evaluando.java
+C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\LineaInvestigacion.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\NivelEstudios.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\PasswordResetToken.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\model\Proyecto.java
@@ -23,9 +25,11 @@ C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyec
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\repository\AdminRepository.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\repository\EvaluadorRepository.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\repository\EvaluandoRepository.java
+C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\repository\LineaInvestigacionRepository.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\repository\PasswordResetTokenRepository.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\service\AdminService.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\service\AuthService.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\service\EvaluadorService.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\service\EvaluandoService.java
+C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\service\LineaInvestigacionService.java
 C:\Users\SEBASTIAN\OneDrive\Escritorio\Universidad\8. Octavo semestre\API\Proyecto\cc-be\src\main\java\com\cc\be\service\PasswordResetService.java

@@ -3,6 +3,7 @@ com\cc\be\model\NivelEstudios.class
 com\cc\be\dto\EvaluandoRequestDTO.class
 com\cc\be\model\Evaluador.class
 com\cc\be\model\Proyecto.class
+com\cc\be\model\LineaInvestigacion.class
 com\cc\be\repository\AccountRepository.class
 com\cc\be\controller\EvaluadorController.class
 com\cc\be\config\WebConfig.class
@@ -12,7 +13,9 @@ com\cc\be\model\Rol.class
 com\cc\be\dto\AdminRequestDTO.class
 com\cc\be\repository\EvaluandoRepository.class
 com\cc\be\dto\EvaluadorRequestDTO.class
+com\cc\be\service\LineaInvestigacionService.class
 com\cc\be\repository\AdminRepository.class
+com\cc\be\repository\LineaInvestigacionRepository.class
 com\cc\be\controller\AuthController.class
 com\cc\be\repository\PasswordResetTokenRepository.class
 com\cc\be\dto\LoginRequestDTO.class
@@ -20,6 +23,7 @@ com\cc\be\service\AuthService.class
 com\cc\be\service\PasswordResetService.class
 com\cc\be\service\AdminService.class
 com\cc\be\model\Admin.class
+com\cc\be\dto\LineaInvestigacionDTO.class
 com\cc\be\dto\ResetPasswordRequest.class
 com\cc\be\repository\EvaluadorRepository.class
 com\cc\be\controller\AdminController.class
