@@ -8,4 +8,5 @@ public class EvaluandoRequestDTO {
     private double telefono;
     private String email;
     private String password;
+    private String nivelEducativo;
 }

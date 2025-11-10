@@ -12,4 +12,5 @@ public class EvaluadorRequestDTO {
     private String orcid;
     private String email;
     private String password;
+    private String nivelEducativo;
 }

@@ -3,6 +3,7 @@ package com.cc.be.service;
 import com.cc.be.dto.EvaluadorRequestDTO;
 import com.cc.be.model.Account;
 import com.cc.be.model.Evaluador;
+import com.cc.be.model.NivelEstudios;
 import com.cc.be.model.Rol;
 import com.cc.be.repository.AccountRepository;
 import com.cc.be.repository.EvaluadorRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,26 +22,35 @@ public class EvaluadorService {
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Evaluador createEvaluador(EvaluadorRequestDTO dto) {
-        if (accountRepository.findByEmail(dto.getEmail()).isPresent()) {
+    public Evaluador createEvaluador(EvaluadorRequestDTO evaluadorRequestDTO) {
+        if (accountRepository.findByEmail(evaluadorRequestDTO.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya está en uso");
         }
 
         Account account = new Account();
-        account.setEmail(dto.getEmail());
-        account.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        account.setEmail(evaluadorRequestDTO.getEmail());
+        account.setPassword(bCryptPasswordEncoder.encode(evaluadorRequestDTO.getPassword()));
         account.setRol(Rol.EVALUADOR);
         account.setEnabled(true);
+
         Account savedAccount = accountRepository.save(account);
 
         Evaluador evaluador = new Evaluador();
-        evaluador.setNombre(dto.getNombre());
-        evaluador.setApellido(dto.getApellido());
-        evaluador.setAfiliacionInstitucional(dto.getAfiliacionInstitucional());
-        evaluador.setCvlac(dto.getCvlac());
-        evaluador.setGoogleScholar(dto.getGoogleScholar());
-        evaluador.setOrcid(dto.getOrcid());
+        evaluador.setNombre(evaluadorRequestDTO.getNombre());
+        evaluador.setApellido(evaluadorRequestDTO.getApellido());
+        evaluador.setAfiliacionInstitucional(evaluadorRequestDTO.getAfiliacionInstitucional());
+        evaluador.setCvlac(evaluadorRequestDTO.getCvlac());
+        evaluador.setGoogleScholar(evaluadorRequestDTO.getGoogleScholar());
+        evaluador.setOrcid(evaluadorRequestDTO.getOrcid());
         evaluador.setAccount(savedAccount);
+
+        try {
+            evaluador.setNivelEducativo(
+                    NivelEstudios.valueOf(evaluadorRequestDTO.getNivelEducativo().toUpperCase())
+            );
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Nivel educativo inválido. Valores permitidos: " + Arrays.toString(NivelEstudios.values()));
+        }
 
         return evaluadorRepository.save(evaluador);
     }
@@ -62,6 +73,17 @@ public class EvaluadorService {
         evaluador.setCvlac(dto.getCvlac());
         evaluador.setGoogleScholar(dto.getGoogleScholar());
         evaluador.setOrcid(dto.getOrcid());
+
+        if (dto.getNivelEducativo() != null && !dto.getNivelEducativo().isEmpty()) {
+            try {
+                evaluador.setNivelEducativo(
+                        NivelEstudios.valueOf(dto.getNivelEducativo().toUpperCase())
+                );
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
+                        + Arrays.toString(NivelEstudios.values()));
+            }
+        }
 
         return evaluadorRepository.save(evaluador);
     }

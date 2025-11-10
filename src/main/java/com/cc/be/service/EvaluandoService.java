@@ -3,6 +3,7 @@ package com.cc.be.service;
 import com.cc.be.dto.EvaluandoRequestDTO;
 import com.cc.be.model.Account;
 import com.cc.be.model.Evaluando;
+import com.cc.be.model.NivelEstudios;
 import com.cc.be.model.Rol;
 import com.cc.be.repository.AccountRepository;
 import com.cc.be.repository.EvaluandoRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -38,6 +40,16 @@ public class EvaluandoService {
         evaluando.setTelefono(evaluandoRequestDTO.getTelefono());
         evaluando.setAccount(savedAccount);
 
+        // conversión segura del nivel educativo
+        try {
+            evaluando.setNivelEstudios(
+                    NivelEstudios.valueOf(evaluandoRequestDTO.getNivelEducativo().toUpperCase())
+            );
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
+                    + Arrays.toString(NivelEstudios.values()));
+        }
+
         return evaluandoRepository.save(evaluando);
     }
 
@@ -56,6 +68,17 @@ public class EvaluandoService {
 
         evaluando.setNombre(evaluandoRequestDTO.getNombre());
         evaluando.setTelefono(evaluandoRequestDTO.getTelefono());
+
+        if (evaluandoRequestDTO.getNivelEducativo() != null && !evaluandoRequestDTO.getNivelEducativo().isEmpty()) {
+            try {
+                evaluando.setNivelEstudios(
+                        NivelEstudios.valueOf(evaluandoRequestDTO.getNivelEducativo().toUpperCase())
+                );
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Nivel educativo inválido. Valores permitidos: "
+                        + Arrays.toString(NivelEstudios.values()));
+            }
+        }
 
         return evaluandoRepository.save(evaluando);
     }

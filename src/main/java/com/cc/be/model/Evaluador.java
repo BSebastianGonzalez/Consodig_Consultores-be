@@ -25,4 +25,6 @@ public class Evaluador {
     @JsonBackReference
     @MapsId
     private Account account;
+
+    private NivelEstudios nivelEducativo;
 }
