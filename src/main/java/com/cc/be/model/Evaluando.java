@@ -33,8 +33,6 @@ public class Evaluando {
             inverseJoinColumns = @JoinColumn(name = "linea_investigacion_id")
     )
     @JsonManagedReference
-    private List<LineaInvestigacion> lineasInvestigacion = new ArrayList<>();
+    private List<LineaInvestigacion> lineasInvestigacionEvaluando = new ArrayList<>();
     private NivelEstudios nivelEstudios;
-
-
 }
