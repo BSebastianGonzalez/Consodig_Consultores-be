@@ -28,8 +28,8 @@ public class Evaluando {
 
     @ManyToMany
     @JoinTable(
-            name = "evaluador_linea_investigacion",
-            joinColumns = @JoinColumn(name = "evaluador_id"),
+            name = "evaluando_linea_investigacion",
+            joinColumns = @JoinColumn(name = "evaluando_id"),
             inverseJoinColumns = @JoinColumn(name = "linea_investigacion_id")
     )
     @JsonManagedReference
