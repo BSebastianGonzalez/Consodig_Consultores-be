@@ -50,7 +50,7 @@ public class PasswordResetService {
         );
         tokenRepository.save(resetToken);
 
-        String link = "https://micro-pdau.vercel.app/reset_password?token=" + token;
+        String link = "https://consodigconsultores.vercel.app/reset-password-confirm?token=" + token;
 
         Context context = new Context();
         context.setVariable("link", link);
